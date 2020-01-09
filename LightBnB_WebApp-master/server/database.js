@@ -169,6 +169,16 @@ const getAllProperties = function(options, limit = 10) {
     }
   }
 
+  if (options.owner_id) {
+    queryParams.push(`${options.owner_id}`);
+
+    if (queryParams.length > 1) { 
+      queryString += ` AND properties.owner_id >= $${queryParams.length}`
+    } else {
+      queryString += `WHERE properties.owner_id >= $${queryParams.length}`
+    }
+  }
+
   queryString += `
     GROUP BY properties.id
   `
